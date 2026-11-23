@@ -122,6 +122,81 @@ that were the day's headlines on the 23rd.
   Times)
 - Still headline news on 23 Nov (Manila Times, 23 Nov edition).
 
+## Redesign note — "The Handover" (rework of the first build)
+
+The first build (commit add1bd73) reused the 22 Nov edition's dark
+2x3 equal-grid layout and its "mixed six" recipe. Naomi corrected
+that: repeating the same formula breeds boredom (腻) — each edition
+needs its own editorial concept, hierarchy and visual language, from
+the editor's own judgment, not from her stated taste.
+
+This rework rebuilds the page around one idea of its own: **power
+changes hands**. A CEO returns (Nvidia, the lead), a kingpin falls
+(Sinaloa), an alliance is renegotiated with strings attached
+(Manila), a blockade is tested (Hormuz), a record is broken
+(SpaceX), the game expands to four nations (FIFA). Layout is now
+lead-story, not six equal panels: one dominant lead with a
+full-width picture, two supporting stories, and a text-only
+"The Day in Brief" strip. Visual language changed completely:
+cream paper, black ink, one red accent — a classic broadsheet,
+not yesterday's dark navy card grid.
+
+The six stories and every fact are unchanged from the verified set
+above; only headlines were re-angled where the facts support it
+("Nvidia Hands the Keys Back to Huang", "Fourteen Tankers Test the
+Blockade", "Manila's $2.4B Deal Comes With Strings", "The Fall of
+'Chapo Isidro'"). Render is deterministic (sha256 verified twice).
+
+## 10-pass headline selection (standing rule — run before finalizing)
+
+Candidate pool (all verified real above): A Nvidia/Huang returns;
+B Hormuz tanker gambit + Bahrain strikes; C Manila $2.4B defence
+deal; D SpaceX 32h turnaround; E FIFA 2031 Women's World Cup;
+F Chapo Isidro captured; G COP31 aftermath; H US House Democrats'
+majority; I BepiColombo at Mercury; J Russia–Ukraine war;
+K Democrats' 2028 starting gun / Trump–Schumer; L Nvidia
+chip-sales inquiry; M Ariane 6 launch postponed; N Trump inclined
+to resume strikes on Iran after the New Year.
+
+Ten independent ranking passes, each by a different editorial lens,
+each producing an ordered top 6:
+
+1. Global impact — B, A, C, H, E, F
+2. Novelty / surprise — A, F, D, E, C, B
+3. Human drama / narrative — A, F, B, C, H, D
+4. Visual potential — D, B, F, E, A, C
+5. Reader interest / broad appeal — A, E, F, D, B, H
+6. Economic / market significance — A, B, C, H, G, D
+7. Historical significance / firsts — E, D, H, I, A, F
+8. Geographic diversity — A, B, C, D, E, F
+9. Theme fit ("power changes hands") — A, F, C, B, E, H
+10. Balance / mix, no repeats of yesterday's leads — A, B, C, D, E, F
+
+Tally (appearances out of 10):
+
+| story | count |
+|---|---|
+| A Nvidia / Huang returns | 10 |
+| B Hormuz blockade | 9 |
+| F Chapo Isidro captured | 9 |
+| C Manila defence deal | 8 |
+| D SpaceX record | 8 |
+| E FIFA Women's World Cup | 8 |
+| H House Democrats' majority | 6 |
+| G COP31 aftermath | 1 |
+| I BepiColombo | 1 |
+| J Russia–Ukraine war | 0 |
+| K 2028 starting gun / Trump–Schumer | 0 |
+| L Nvidia chip-sales inquiry | 0 |
+| M Ariane 6 postponed | 0 |
+| N Trump resume-strikes remark | 0 |
+
+Consensus six: A, B, C, D, E, F — identical to the six already on
+the page. Nearest challenger is H (House majority, 6/10), but it led
+yesterday's (22 Nov) front page, so repeating it would be exactly
+the repetition (腻) this rule guards against. No story changes
+needed; the redesigned "The Handover" page stands as built.
+
 ## Considered and dropped
 
 - **COP31 aftermath** — Guterres "deeply disappointed", focus shifting

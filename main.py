@@ -3,13 +3,21 @@
 
 Reads news.json next to this script and writes /output/entry.png
 (or $MAKEFUN_OUTPUT_PATH). Deterministic: fixed geometry, fixed fonts,
-no clock, no randomness, no network. Each story card carries a picture
-panel drawn procedurally with Pillow (no image assets) above its tag,
-headline and summary. If Pillow cannot be imported, the bundled
-entry.png is copied to the output path instead.
+no clock, no randomness, no network.
 
-The six stories are a mixed set — tech, conflict, diplomacy, space,
-sport and crime — with only one war story, per the reader's request.
+Editorial concept — THE HANDOVER: power changes hands all day.
+A CEO returns (Nvidia), a kingpin falls (Sinaloa), an alliance is
+renegotiated with strings attached (Manila), a blockade is tested
+(Hormuz), a record is broken (SpaceX), the game expands to four
+nations (Women's World Cup). The page is built around that idea, not
+around a grid: one dominant lead story, two supporting stories, and
+a text-only briefs strip — a classic broadsheet, not yesterday's
+dark 2x3 card grid. Cream paper, black ink, one red accent.
+
+The six stories and every fact are the verified ones in news.json /
+verification.md; only the headlines are re-angled to the theme.
+If Pillow cannot be imported, the bundled entry.png is copied to
+the output path instead.
 """
 
 import json
@@ -21,27 +29,31 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUTPUT = os.environ.get("MAKEFUN_OUTPUT_PATH") or "/output/entry.png"
 
 W, H = 1024, 1024
-PAGE_BG = (14, 26, 43)
-CARD_BG = (22, 39, 62)
-CARD_LINE = (42, 63, 92)
-CREAM = (242, 232, 201)
-GOLD = (201, 168, 106)
-HEADLINE = (242, 237, 227)
-SUMMARY = (185, 194, 207)
-FOOTER = (138, 148, 164)
+MARGIN = 40
+CW = W - 2 * MARGIN  # 944 content width
+
+# Broadsheet palette: cream paper, black ink, one red accent.
+PAPER = (247, 243, 232)
+INK = (28, 28, 32)
+MUTED = (110, 105, 95)
+RED = (172, 32, 48)
+RULE = (28, 28, 32)
+HEADLINE = (28, 28, 32)
+SUMMARY = (58, 56, 52)
+FOOTER = (110, 105, 95)
 
 SERIF_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
 SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 SANS_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
-# One accent colour per story, in news.json order.
+# Accent colour per story, in news.json order.
 ACCENTS = [
-    (118, 185, 0),    # Nvidia: green
-    (198, 91, 78),    # Hormuz: red
-    (217, 164, 65),   # Manila: gold
-    (91, 141, 201),   # SpaceX: blue
-    (95, 168, 107),   # FIFA: green
-    (217, 123, 63),   # Sinaloa: orange
+    (46, 120, 60),    # Nvidia: green
+    (172, 32, 48),    # Hormuz: red
+    (150, 110, 40),   # Manila: gold
+    (40, 80, 140),    # SpaceX: blue
+    (40, 110, 70),    # FIFA: green
+    (170, 90, 40),    # Sinaloa: rust
 ]
 
 
@@ -94,34 +106,45 @@ def stars(draw, x, y, points, color=(232, 236, 244)):
         draw.ellipse([x + fx - r, y + fy - r, x + fx + r, y + fy + r], fill=color)
 
 
-def scene_nvidia(draw, x, y, w, h):
-    """AI chip on a dark board, traces fanning out, shares arrow up."""
+def scene_nvidia_wide(draw, x, y, w, h):
+    """Wide lead picture: one big AI chip on a dark board, shares arrow up.
+
+    Drawn for a wide panel (944x200). Chip left-of-centre, circuit
+    traces radiating across the board, a rising arrow and +33% right.
+    """
     draw.rectangle([x, y, x + w, y + h], fill=(8, 24, 16))
-    # circuit traces from the chip to the edges
-    for ty in (18, 34, 74, 90):
-        draw.line([x + 8, y + ty, x + 168, y + ty], fill=(38, 92, 54), width=2)
-        draw.ellipse([x + 4, y + ty - 3, x + 10, y + ty + 3], fill=(118, 185, 0))
-    for tx in (300, 330, 360, 390):
-        draw.line([x + tx, y + 8, x + tx, y + 100], fill=(38, 92, 54), width=2)
+    # long circuit traces across the board
+    for ty in (26, 52, 148, 174):
+        draw.line([x + 12, y + ty, x + w - 12, y + ty], fill=(38, 92, 54), width=2)
+        draw.ellipse([x + 8, y + ty - 3, x + 14, y + ty + 3], fill=(118, 185, 0))
+        draw.ellipse([x + w - 14, y + ty - 3, x + w - 8, y + ty + 3],
+                     fill=(118, 185, 0))
+    # vertical traces on the far right
+    for tx in (w - 90, w - 60, w - 30):
+        draw.line([x + tx, y + 8, x + tx, y + 60], fill=(38, 92, 54), width=2)
         draw.ellipse([x + tx - 3, y + 4, x + tx + 3, y + 10], fill=(118, 185, 0))
-    # chip: dark square, gold pins, glowing core
-    draw.rectangle([x + 168, y + 22, x + 282, y + 86], fill=(16, 34, 22),
-                   outline=(118, 185, 0), width=3)
-    for px in range(180, 274, 16):
-        draw.line([x + px, y + 14, x + px, y + 22], fill=(201, 168, 106), width=3)
-        draw.line([x + px, y + 86, x + px, y + 94], fill=(201, 168, 106), width=3)
-    for py in range(34, 78, 16):
-        draw.line([x + 160, y + py, x + 168, y + py], fill=(201, 168, 106), width=3)
-        draw.line([x + 282, y + py, x + 290, y + py], fill=(201, 168, 106), width=3)
-    draw.rectangle([x + 198, y + 42, x + 252, y + 66], fill=(118, 185, 0))
-    draw.rectangle([x + 206, y + 48, x + 244, y + 60], fill=(190, 235, 120))
-    # rising arrow, bottom-left to top-right, over the board
-    draw.line([x + 300, y + 96, x + 350, y + 66, x + 395, y + 44, x + 430, y + 18],
-              fill=(150, 220, 80), width=4)
-    draw.polygon([(x + 430, y + 18), (x + 414, y + 16), (x + 428, y + 32)],
+    # the chip: big, centred left, gold pins, glowing green core
+    cx0, cy0, cx1, cy1 = x + 190, y + 45, x + 390, y + 155
+    draw.rectangle([cx0, cy0, cx1, cy1], fill=(16, 34, 22),
+                   outline=(118, 185, 0), width=4)
+    for px in range(cx0 + 14, cx1 - 8, 22):
+        draw.line([x + px, y + 33, x + px, cy0], fill=(201, 168, 106), width=4)
+        draw.line([x + px, cy1, x + px, y + 167], fill=(201, 168, 106), width=4)
+    for py in range(cy0 + 16, cy1 - 8, 22):
+        draw.line([x + 178, y + py, cx0, y + py], fill=(201, 168, 106), width=4)
+        draw.line([cx1, y + py, x + 402, y + py], fill=(201, 168, 106), width=4)
+    draw.rectangle([x + 248, y + 78, x + 332, y + 122], fill=(118, 185, 0))
+    draw.rectangle([x + 262, y + 88, x + 318, y + 112], fill=(190, 235, 120))
+    # rising arrow across the right half
+    draw.line([x + 470, y + 176, x + 600, y + 128, x + 720, y + 88, x + 850, y + 42],
+              fill=(150, 220, 80), width=5)
+    draw.polygon([(x + 850, y + 42), (x + 826, y + 38), (x + 846, y + 62)],
                  fill=(150, 220, 80))
-    pct_font = load_font(SANS_BOLD, 17)
-    draw.text((x + 356, y + 6), "+33%", font=pct_font, fill=(150, 220, 80))
+    pct_font = load_font(SANS_BOLD, 34)
+    draw.text((x + 700, y + 8), "+33%", font=pct_font, fill=(150, 220, 80))
+    sub_font = load_font(SANS, 13)
+    draw.text((x + 704, y + 52), "in early trading", font=sub_font,
+              fill=(226, 200, 150))
 
 
 def scene_hormuz(draw, x, y, w, h):
@@ -129,16 +152,12 @@ def scene_hormuz(draw, x, y, w, h):
     sky(draw, x, y, w, h, (14, 20, 38), (44, 56, 84))
     stars(draw, x, y, [(30, 12, 1), (120, 20, 2), (220, 10, 1), (330, 16, 2),
                        (410, 12, 1), (70, 30, 1), (280, 28, 1)], (220, 226, 236))
-    # low orange glow on the horizon
     draw.ellipse([x + 330, y + 34, x + 420, y + 62], fill=(190, 110, 50))
     draw.ellipse([x + 350, y + 42, x + 400, y + 58], fill=(230, 160, 70))
-    # sea
     draw.rectangle([x, y + 62, x + w, y + h], fill=(13, 30, 50))
     draw.line([x, y + 62, x + w, y + 62], fill=(90, 120, 150), width=1)
-    # dashed red blockade line across the sea
     for dx in range(0, w, 26):
         draw.line([x + dx, y + 84, x + dx + 14, y + 84], fill=(198, 91, 78), width=3)
-    # three tanker silhouettes, light slate so they read on the sea
     for tx, tw in ((30, 120), (180, 104), (316, 112)):
         draw.polygon([(x + tx, y + 66), (x + tx + tw, y + 66),
                       (x + tx + tw - 8, y + 78), (x + tx + 8, y + 78)],
@@ -149,7 +168,6 @@ def scene_hormuz(draw, x, y, w, h):
                      fill=(232, 163, 61))
         draw.line([x + tx, y + 66, x + tx + tw, y + 66],
                   fill=(140, 160, 180), width=1)
-    # wake lines
     for wx in (60, 210, 350):
         draw.line([x + wx, y + 92, x + wx + 26, y + 92], fill=(90, 120, 150), width=1)
         draw.line([x + wx + 8, y + 100, x + wx + 30, y + 100], fill=(70, 100, 130), width=1)
@@ -158,7 +176,6 @@ def scene_hormuz(draw, x, y, w, h):
 def scene_manila(draw, x, y, w, h):
     """Two flags side by side — US left, Philippines right — with a $2.4B pill."""
     mid = x + w // 2
-    # --- US flag: stripes + blue canton with dot stars
     for i in range(7):
         fill = (178, 34, 52) if i % 2 == 0 else (240, 240, 238)
         draw.rectangle([x, y + i * h // 7, mid, y + (i + 1) * h // 7], fill=fill)
@@ -167,14 +184,12 @@ def scene_manila(draw, x, y, w, h):
         for sy in range(8, 54, 14):
             draw.ellipse([x + sx - 2, y + sy - 2, x + sx + 2, y + sy + 2],
                          fill=(240, 240, 238))
-    # --- Philippine flag: white triangle, blue over red, small sun
     draw.rectangle([mid, y, x + w, y + h // 2], fill=(0, 56, 168))
     draw.rectangle([mid, y + h // 2, x + w, y + h], fill=(206, 17, 38))
     draw.polygon([(mid, y), (mid, y + h), (mid + 96, y + h // 2)],
                  fill=(240, 240, 238))
     draw.ellipse([mid + 30, y + 44, mid + 50, y + 64], fill=(253, 209, 0))
     draw.ellipse([mid + 36, y + 50, mid + 44, y + 58], fill=(240, 240, 238))
-    # --- gold pill with the price, centred on the seam
     draw.rounded_rectangle([x + 168, y + 36, x + 282, y + 72], radius=18,
                            fill=(201, 168, 106), outline=(242, 232, 201), width=2)
     pill_font = load_font(SANS_BOLD, 20)
@@ -183,173 +198,130 @@ def scene_manila(draw, x, y, w, h):
     draw.text((x + (w - lw) / 2, y + 42), label, font=pill_font, fill=(20, 26, 40))
 
 
-def scene_spacex(draw, x, y, w, h):
-    """Falcon 9 climbing at dawn from Vandenberg, flame and smoke below."""
-    sky(draw, x, y, w, h, (28, 40, 72), (226, 132, 66))
-    stars(draw, x, y, [(24, 12, 1), (90, 20, 2), (150, 10, 1), (210, 18, 1),
-                       (60, 34, 1), (180, 30, 2)], (232, 236, 244))
-    # ground and pad
-    draw.rectangle([x, y + 92, x + w, y + h], fill=(24, 22, 30))
-    draw.rectangle([x + 296, y + 86, x + 360, y + 92], fill=(52, 52, 58))
-    # launch tower to the left of the rocket
-    draw.rectangle([x + 262, y + 22, x + 270, y + 92], fill=(90, 92, 98))
-    for ty in (30, 46, 62, 78):
-        draw.line([x + 262, y + ty, x + 288, y + ty], fill=(90, 92, 98), width=3)
-    # rocket body, nose cone, flame
-    draw.rectangle([x + 300, y + 26, x + 322, y + 86], fill=(238, 238, 234))
-    draw.polygon([(x + 300, y + 26), (x + 311, y + 8), (x + 322, y + 26)],
-                 fill=(200, 40, 40))
-    draw.rectangle([x + 300, y + 40, x + 322, y + 44], fill=(40, 60, 110))
-    draw.polygon([(x + 302, y + 86), (x + 311, y + 108), (x + 320, y + 86)],
-                 fill=(240, 138, 36))
-    draw.polygon([(x + 306, y + 86), (x + 311, y + 100), (x + 316, y + 86)],
-                 fill=(245, 197, 66))
-    # smoke clouds at the base
-    for sx, sy, sr in ((292, 92, 12), (312, 96, 14), (336, 92, 11), (352, 98, 9)):
-        draw.ellipse([x + sx - sr, y + sy - sr // 2, x + sx + sr, y + sy + sr // 2],
-                     fill=(150, 150, 156))
-    # turnaround time, top-left
-    time_font = load_font(SANS_BOLD, 16)
-    draw.text((x + 14, y + 10), "32h 03m", font=time_font, fill=(242, 232, 201))
-    sub_font = load_font(SANS, 11)
-    draw.text((x + 14, y + 30), "pad turnaround", font=sub_font, fill=(226, 200, 150))
-    # second tiny rocket silhouette far left, the previous launch
-    draw.rectangle([x + 96, y + 62, x + 104, y + 86], fill=(120, 124, 130))
-    draw.polygon([(x + 96, y + 62), (x + 100, y + 54), (x + 104, y + 62)],
-                 fill=(120, 124, 130))
-
-
-def scene_fifa(draw, x, y, w, h):
-    """Soccer pitch, big ball, gold trophy, 48 teams."""
-    draw.rectangle([x, y, x + w, y + h], fill=(30, 100, 56))
-    draw.rectangle([x + 10, y + 8, x + w - 10, y + h - 8], outline=(240, 240, 240), width=2)
-    draw.line([x + 10, y + h // 2, x + w - 10, y + h // 2], fill=(240, 240, 240), width=2)
-    draw.ellipse([x + 196, y + 22, x + 254, y + 86], outline=(240, 240, 240), width=2)
-    # soccer ball, centre-left
-    cx, cy, r = x + 116, y + 54, 34
-    draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(244, 244, 242))
-    draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=(40, 40, 40), width=2)
-    px, py = cx, cy
-    draw.polygon([(px - 9, py - 12), (px + 9, py - 12), (px + 14, py + 4),
-                  (px, py + 14), (px - 14, py + 4)], fill=(30, 30, 30))
-    for bx, by in ((cx - 24, cy - 18), (cx + 24, cy - 18), (cx - 28, cy + 14),
-                   (cx + 28, cy + 14), (cx, cy - 28)):
-        draw.ellipse([bx - 5, by - 5, bx + 5, by + 5], fill=(30, 30, 30))
-    # gold trophy, right
-    tx = x + 330
-    draw.polygon([(tx, y + 34), (tx + 44, y + 34), (tx + 38, y + 62),
-                  (tx + 6, y + 62)], fill=(232, 183, 70))
-    draw.arc([tx - 8, y + 34, tx + 6, y + 52], 90, 270, fill=(232, 183, 70), width=3)
-    draw.arc([tx + 38, y + 34, tx + 52, y + 52], 270, 90, fill=(232, 183, 70), width=3)
-    draw.rectangle([tx + 18, y + 62, tx + 26, y + 74], fill=(232, 183, 70))
-    draw.rectangle([tx + 8, y + 74, tx + 36, y + 80], fill=(232, 183, 70))
-    # 48 teams, top-right
-    num_font = load_font(SANS_BOLD, 22)
-    draw.text((x + 384, y + 12), "48", font=num_font, fill=(242, 232, 201))
-    team_font = load_font(SANS_BOLD, 11)
-    draw.text((x + 384, y + 38), "TEAMS", font=team_font, fill=(242, 232, 201))
-
-
-def scene_sinaloa(draw, x, y, w, h):
-    """Night raid over Guasave: helicopters, searchlights, rooftops."""
-    sky(draw, x, y, w, h, (8, 12, 26), (26, 32, 56))
-    stars(draw, x, y, [(30, 14, 1), (120, 10, 2), (200, 16, 1), (300, 12, 2),
-                       (400, 18, 1), (70, 26, 1), (250, 26, 1), (360, 30, 1)],
-          (220, 226, 236))
-    # rooftops along the bottom, a few lit windows
-    draw.rectangle([x, y + 88, x + w, y + h], fill=(12, 14, 24))
-    for bx, bw, bh in ((0, 90, 12), (100, 70, 18), (180, 110, 10), (300, 80, 16),
-                       (390, 60, 12)):
-        draw.rectangle([x + bx, y + 88 - bh, x + bx + bw, y + 88], fill=(20, 22, 34))
-    for wx, wy in ((24, 80), (130, 76), (220, 82), (330, 78), (410, 80)):
-        draw.rectangle([x + wx, y + wy, x + wx + 5, y + wy + 5], fill=(232, 183, 70))
-    # helicopter 1, upper left, beam sweeping down-right
-    hx, hy = x + 96, y + 30
-    draw.ellipse([hx - 26, hy - 8, hx + 26, hy + 8], fill=(70, 74, 82))
-    draw.line([hx + 24, hy, hx + 52, hy - 6], fill=(70, 74, 82), width=4)
-    draw.line([hx - 34, hy - 12, hx + 34, hy - 12], fill=(150, 152, 158), width=3)
-    draw.polygon([(hx - 6, hy + 6), (hx + 10, hy + 6), (hx + 78, y + 88),
-                  (hx + 52, y + 88)], fill=(240, 230, 180))
-    # helicopter 2, upper right, beam sweeping down-left
-    hx2, hy2 = x + 340, y + 22
-    draw.ellipse([hx2 - 24, hy2 - 7, hx2 + 24, hy2 + 7], fill=(70, 74, 82))
-    draw.line([hx2 - 22, hy2, hx2 - 48, hy2 - 5], fill=(70, 74, 82), width=4)
-    draw.line([hx2 - 32, hy2 - 11, hx2 + 32, hy2 - 11], fill=(150, 152, 158), width=3)
-    draw.polygon([(hx2 - 8, hy2 + 5), (hx2 + 8, hy2 + 5), (hx2 - 44, y + 88),
-                  (hx2 - 70, y + 88)], fill=(240, 230, 180))
-    # red beacon dots on the helicopters
-    draw.ellipse([hx - 4, hy - 16, hx + 2, hy - 10], fill=(220, 60, 60))
-    draw.ellipse([hx2 - 2, hy2 - 15, hx2 + 4, hy2 - 9], fill=(220, 60, 60))
-
-
-SCENES = [scene_nvidia, scene_hormuz, scene_manila,
-          scene_spacex, scene_fifa, scene_sinaloa]
-
-
 def render():
     from PIL import Image, ImageDraw
 
     with open(os.path.join(HERE, "news.json"), encoding="utf-8") as f:
         data = json.load(f)
+    stories = data["stories"]
 
-    img = Image.new("RGB", (W, H), PAGE_BG)
+    img = Image.new("RGB", (W, H), PAPER)
     draw = ImageDraw.Draw(img)
 
-    # masthead
-    title_font = load_font(SERIF_BOLD, 44)
+    # --- masthead: theme kicker, title, dateline, double rule
+    kick_font = load_font(SANS_BOLD, 15)
+    kicker = "P O W E R   C H A N G E S   H A N D S"
+    kw = draw.textlength(kicker, font=kick_font)
+    draw.text(((W - kw) / 2, 24), kicker, font=kick_font, fill=RED)
+
+    title_font = load_font(SERIF_BOLD, 46)
     title = data["title"]
     tw = draw.textlength(title, font=title_font)
-    draw.text(((W - tw) / 2, 26), title, font=title_font, fill=CREAM)
-    sub_font = load_font(SANS, 16)
+    draw.text(((W - tw) / 2, 46), title, font=title_font, fill=INK)
+
+    sub_font = load_font(SANS, 13)
     sub = data["subtitle"]
     sw = draw.textlength(sub, font=sub_font)
-    draw.text(((W - sw) / 2, 88), sub, font=sub_font, fill=GOLD)
-    draw.line([36, 120, W - 36, 120], fill=GOLD, width=2)
+    draw.text(((W - sw) / 2, 106), sub, font=sub_font, fill=MUTED)
 
-    # 2x3 grid of cards
-    margin, gutter_x, gutter_y = 36, 20, 18
-    card_w = (W - 2 * margin - gutter_x) // 2
-    card_h = 258
-    grid_top = 138
-    for i, story in enumerate(data["stories"]):
-        row, col = divmod(i, 2)
-        cx = margin + col * (card_w + gutter_x)
-        cy = grid_top + row * (card_h + gutter_y)
-        accent = ACCENTS[i % len(ACCENTS)]
-        draw.rounded_rectangle([cx, cy, cx + card_w, cy + card_h],
-                               radius=10, fill=CARD_BG, outline=CARD_LINE, width=1)
-        # picture panel
-        px, py, pw, ph = cx + 8, cy + 8, card_w - 16, 108
-        panel = Image.new("RGB", (pw, ph), CARD_BG)
+    draw.line([MARGIN, 130, W - MARGIN, 130], fill=RULE, width=2)
+    draw.line([MARGIN, 134, W - MARGIN, 134], fill=RULE, width=1)
+
+    # --- lead story: full-width picture, red tag, huge headline, summary
+    lead = stories[0]
+    panel = Image.new("RGB", (CW, 200), PAPER)
+    pdraw = ImageDraw.Draw(panel)
+    scene_nvidia_wide(pdraw, 0, 0, CW, 200)
+    img.paste(panel, (MARGIN, 148))
+
+    tag_font = load_font(SANS_BOLD, 14)
+    draw.text((MARGIN, 360), lead["tag"], font=tag_font, fill=RED)
+    head_font, head_lines = fit_text(draw, lead["headline"], SERIF_BOLD,
+                                     38, CW, 2, 28)
+    hy = 382
+    for line in head_lines:
+        draw.text((MARGIN, hy), line, font=head_font, fill=HEADLINE)
+        hy += head_font.size + 4
+    sum_font, sum_lines = fit_text(draw, lead["summary"], SANS,
+                                   15, CW, 2, 13)
+    sy = hy + 6
+    for line in sum_lines:
+        draw.text((MARGIN, sy), line, font=sum_font, fill=SUMMARY)
+        sy += sum_font.size + 5
+
+    draw.line([MARGIN, 500, W - MARGIN, 500], fill=RULE, width=1)
+
+    # --- supporting stories: two columns, picture + tag + headline + summary
+    mid_top = 516
+    col_w = (CW - 24) // 2
+    for i, story in enumerate(stories[1:3]):
+        cx = MARGIN + i * (col_w + 24)
+        panel = Image.new("RGB", (col_w, 104), PAPER)
         pdraw = ImageDraw.Draw(panel)
-        SCENES[i % len(SCENES)](pdraw, 0, 0, pw, ph)
-        mask = Image.new("L", (pw, ph), 0)
-        ImageDraw.Draw(mask).rounded_rectangle([0, 0, pw, ph], radius=8, fill=255)
-        img.paste(panel, (px, py), mask)
-        # tag, headline, summary
-        tag_font = load_font(SANS_BOLD, 13)
-        draw.text((cx + 14, cy + 124), story["tag"], font=tag_font, fill=accent)
-        head_font, head_lines = fit_text(draw, story["headline"], SERIF_BOLD,
-                                         20, card_w - 28, 2, 16)
-        hy = cy + 143
-        for line in head_lines:
-            draw.text((cx + 14, hy), line, font=head_font, fill=HEADLINE)
-            hy += head_font.size + 4
-        sum_font, sum_lines = fit_text(draw, story["summary"], SANS,
-                                       14, card_w - 28, 3, 12)
+        if i == 0:
+            scene_hormuz(pdraw, 0, 0, col_w, 104)
+        else:
+            scene_manila(pdraw, 0, 0, col_w, 104)
+        img.paste(panel, (cx, mid_top))
+        accent = ACCENTS[i + 1]
+        draw.text((cx, mid_top + 112), story["tag"], font=tag_font, fill=accent)
+        h_font, h_lines = fit_text(draw, story["headline"], SERIF_BOLD,
+                                   19, col_w, 2, 16)
+        hy = mid_top + 132
+        for line in h_lines:
+            draw.text((cx, hy), line, font=h_font, fill=HEADLINE)
+            hy += h_font.size + 3
+        s_font, s_lines = fit_text(draw, story["summary"], SANS,
+                                   13, col_w, 3, 11)
         sy = hy + 4
-        for line in sum_lines:
-            draw.text((cx + 14, sy), line, font=sum_font, fill=SUMMARY)
-            sy += sum_font.size + 4
+        for line in s_lines:
+            draw.text((cx, sy), line, font=s_font, fill=SUMMARY)
+            sy += s_font.size + 4
+    # vertical rule between the two columns
+    draw.line([MARGIN + col_w + 12, mid_top, MARGIN + col_w + 12, 752],
+              fill=RULE, width=1)
+    draw.line([MARGIN, 762, W - MARGIN, 762], fill=RULE, width=1)
 
-    # footer: sources, wrapped to two centred lines
-    foot_font = load_font(SANS, 12)
-    foot_lines = wrap(draw, data["sources"], foot_font, W - 2 * margin)
+    # --- the day in brief: text-only strip, three columns, vertical rules
+    brief_font = load_font(SANS_BOLD, 13)
+    brief_title = "THE DAY IN BRIEF"
+    bw = draw.textlength(brief_title, font=brief_font)
+    bcx = W // 2
+    draw.line([MARGIN, 786, bcx - bw / 2 - 14, 786], fill=RULE, width=1)
+    draw.line([bcx + bw / 2 + 14, 786, W - MARGIN, 786], fill=RULE, width=1)
+    draw.text((bcx - bw / 2, 776), brief_title, font=brief_font, fill=INK)
+
+    brief_top = 802
+    brief_w = (CW - 2 * 24) // 3
+    for j, story in enumerate(stories[3:6]):
+        bx = MARGIN + j * (brief_w + 24)
+        accent = ACCENTS[j + 3]
+        btag_font = load_font(SANS_BOLD, 12)
+        draw.text((bx, brief_top), story["tag"], font=btag_font, fill=accent)
+        h_font, h_lines = fit_text(draw, story["headline"], SERIF_BOLD,
+                                   17, brief_w, 2, 14)
+        hy = brief_top + 20
+        for line in h_lines:
+            draw.text((bx, hy), line, font=h_font, fill=HEADLINE)
+            hy += h_font.size + 3
+        s_font, s_lines = fit_text(draw, story["summary"], SANS,
+                                   12, brief_w, 3, 11)
+        sy = hy + 4
+        for line in s_lines:
+            draw.text((bx, sy), line, font=s_font, fill=SUMMARY)
+            sy += s_font.size + 4
+        if j < 2:
+            draw.line([bx + brief_w + 12, brief_top, bx + brief_w + 12, 948],
+                      fill=RULE, width=1)
+
+    # --- footer: sources, wrapped to two centred lines
+    foot_font = load_font(SANS, 11)
+    foot_lines = wrap(draw, data["sources"], foot_font, CW)
     fy = 962
     for line in foot_lines[:2]:
         lw = draw.textlength(line, font=foot_font)
         draw.text(((W - lw) / 2, fy), line, font=foot_font, fill=FOOTER)
-        fy += 16
+        fy += 15
 
     out_dir = os.path.dirname(OUTPUT)
     if out_dir:
