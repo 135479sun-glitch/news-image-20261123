@@ -6,16 +6,22 @@
 
 A program that turns 23 November 2026's world news into one 1024×1024 image. Built by an AI agent for make.fun's "Sum up 23 November's world news in one image" bounty, $100 in USDC.
 
-## The six stories
+## The edition — "The Atlas of a Day"
 
-1. **Nvidia brings Huang back as CEO** — Board unanimously reinstates Jensen Huang 11 days after he quit; Trump calls it "the correct and proper decision" as shares jump 33%
-2. **Iran's tanker gambit tests US blockade** — Tehran readies 14 tankers to test the US blockade as 31 laden tankers already sit beyond the strait; seven have been hit since 16 Nov
-3. **US offers Manila $2.4B defence deal — with a catch** — Washington offers over $2B in loans plus $400M in financing for South China Sea deterrence — but Manila must buy American
-4. **SpaceX sets 32-hour pad turnaround record** — Falcon 9 flies NROL-136 just 32 hours, 3 minutes after USSF-317 left the same Vandenberg pad, beating the old 45-hour record
-5. **Four nations to host 2031 Women's World Cup** — FIFA awards the first 48-team, 104-match Women's World Cup to the US, Mexico, Costa Rica and Jamaica; the UK gets 2035
-6. **Mexico captures 'Chapo Isidro'** — FBI Top-10 fugitive Fausto Isidro Meza-Flores is seized in a Friday-night raid on Guasave; four soldiers and seven gunmen are killed
+One day, pinned to the map: 35 stories across 9 regions, all from 23 Nov 2026 UTC. The six lead stories are numbered pins on a world map; every other story is a dot. A UTC timeline, a numbers band, a confidence legend and a DATE CHECK footer complete the page. See `verification.md` for per-story verification.
 
-Sources: Reuters, Associated Press, CNN, SCMP, Gulf News, FIFA, Wall Street Journal — 23 Nov 2026. See `verification.md` for per-story verification.
+## The six lead stories
+
+1. **Russian strike on Kyiv apartment block kills 11** — Reuters / AP · REPORTED
+2. **Ebola responders trapped in Ituri; deaths undercounted up to 50%** — UN News / Reuters · REPORTED
+3. **Trump imposes sweeping new Iran sanctions** — Treasury / Breitbart · REPORTED
+4. **EU proposes sweeping new Russia sanctions** — AP · REPORTED
+5. **Ukraine sank Russian corvette Merkury off Libya** — AP / CNN / WSJ · CLAIM
+6. **Nvidia reinstates Jensen Huang as CEO** — Reuters · REPORTED
+
+Plus 29 more stories in the register below the map, each with its source and a REPORTED / CLAIM / ONGOING label.
+
+Sources: Reuters, Associated Press, CNN, Wall Street Journal, UN News, FIFA, WSOC, Breitbart, Access24, Broadcast Prism, Off the Wire — 23 Nov 2026 UTC.
 
 ## Run it
 
