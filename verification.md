@@ -19,11 +19,15 @@ No grid of equal cards (the 22 Nov edition) and no broadsheet lead story
 pale paper, teal and amber accents, red only for the pins. This is a fresh
 concept of its own, per the standing anti-repetition (腻) rule.
 
-## Coverage — 35 stories, 9 regions
+## Coverage — 35 stories, 7 regions + sport & science
 
-US 10 · Europe 7 · Asia 5 · UK 3 · Americas 3 · Sport 3 · Middle East 2 ·
-Africa 1 · Science 1. The six lead stories are the featured six from the
-10-pass tally; the other 29 run in the register below the map.
+US 10 · Europe 5 · Asia 5 · UK 4 · Americas 3 · Middle East 3 · Africa 1 ·
+plus Sport 3 · Science 1. (Corrected in the polish pass: the submitted
+version's tally read Europe 7 / UK 3 / Middle East 2, which did not match
+the story-by-story count. The true count is Europe 5, UK 4, Middle East 3;
+the total is still 35 and the region count is still 7 geographic regions.)
+The six lead stories are the featured six from the 10-pass tally; the
+other 29 run in the register below the map.
 
 ## Method — pool + 10 genuinely independent passes
 
@@ -40,7 +44,12 @@ Africa 1 · Science 1. The six lead stories are the featured six from the
   9/10, Nvidia CEO reinstatement 4/10 (tie-break over Indonesia factory
   fire, also 4/10, on rank quality: Nvidia avg rank 4.5 vs 6.0).
 
-## The six lead stories (pins 1–6)
+## The six lead stories (pins 1–6, numbered by TIME order)
+
+Pins and cards are numbered by first-report UTC hour, not by importance:
+1 Kyiv ~07:00, 2 Ebola ~09:00, 3 EU ~12:00, 4 Merkury ~14:00,
+5 Nvidia ~16:00, 6 Iran ~18:00. Hours are best estimates from the
+sources (marked "~" on the timeline); see the polish notes below.
 
 ### 1. Russian strike on Kyiv apartment block kills 11 — WAR · KYIV — REPORTED (Reuters / AP)
 - Russian strike on a Kyiv apartment block, Mon 23 Nov; 11 killed,
@@ -52,25 +61,28 @@ Africa 1 · Science 1. The six lead stories are the featured six from the
 - Reuters analysis: Ebola deaths undercounted by up to 50%; outbreak
   11,762 cases, 5,775 deaths. (Reuters)
 
-### 3. Trump imposes sweeping new Iran sanctions — SANCTIONS · IRAN — REPORTED (Treasury / Breitbart)
-- Trump imposes sweeping new Iran sanctions, targeting the regime's
-  "last financial lifeline", Mon 23 Nov. (Breitbart / Treasury)
-
-### 4. EU proposes sweeping new Russia sanctions — SANCTIONS · EU — REPORTED (AP)
+### 3. EU proposes sweeping new Russia sanctions — SANCTIONS · EU — REPORTED (AP)
 - EU proposes sweeping new Russia sanctions targeting banks, crypto and
   sports events, Mon 23 Nov. (AP)
 
-### 5. Ukraine sank Russian corvette Merkury off Libya — WAR · LIBYA — CLAIM (AP / CNN / WSJ)
-- Zelensky confirms Ukraine sank the Russian corvette Merkury off Libya,
-  announced Mon 23 Nov; attack early Sun 22 Nov; 7 sea drones; Ka-27
-  helicopter destroyed; MV Angara cargo ship also hit; satellite images
-  show the vessel submerged. (AP, CNN, WSJ) — CLAIM: the sinking is
-  asserted by Kyiv and not yet independently confirmed.
+### 4. Ukraine sank Russian corvette Merkury off Libya — WAR · LIBYA — CLAIM (AP / CNN / WSJ)
+- Kyiv says sea drones sank the Russian corvette Merkury off Libya;
+  a helicopter and cargo ship were also hit. The sinking was announced
+  Mon 23 Nov; the attack was before dawn Sun 22 Nov; 7 sea drones;
+  Ka-27 helicopter destroyed; MV Angara cargo ship also hit; satellite
+  images show the vessel submerged. (AP, CNN, WSJ) — CLAIM: the sinking
+  is asserted by Kyiv and not yet independently confirmed. The card is
+  framed as the 23 Nov announcement, not as the 22 Nov sinking.
 
-### 6. Nvidia reinstates Jensen Huang as CEO — TECH · NVIDIA — REPORTED (Reuters)
+### 5. Nvidia reinstates Jensen Huang as CEO — TECH · NVIDIA — REPORTED (Reuters)
 - Nvidia board reinstates Jensen Huang as CEO, Mon 23 Nov; shares +31%,
   Nasdaq +6.5%, S&P +4.7%; Trump had called into the board meeting.
   (Reuters)
+
+### 6. Trump imposes sweeping new Iran sanctions — SANCTIONS · IRAN — REPORTED (Treasury / Breitbart)
+- Trump imposes sweeping new Iran sanctions, targeting the revenue the
+  White House calls its "last financial lifeline", Mon 23 Nov.
+  (Breitbart / Treasury)
 
 ## The other 29 stories (register, in page order)
 
@@ -145,7 +157,8 @@ Africa 1 · Science 1. The six lead stories are the featured six from the
 - Thailand–Cambodia border truce holding — update timezone unclear.
 - Two killed in US university shooting — timezone of report unclear.
 - Timms review of disability payments (PIP) expected — a preview of an
-  expected review, not an outcome.
+  expected review, not an outcome. (Now also named in the page's
+  DATE CHECK as the "Not yet" line.)
 
 ## DATE CHECK — excluded, and why (also printed on the page)
 
@@ -161,6 +174,7 @@ Africa 1 · Science 1. The six lead stories are the featured six from the
 - South Korea: Russian aircraft in air defence zone; Pentagon rebukes
   Canada — 23 Nov EST = 24 Nov UTC.
 - Hasina plans return to Bangladesh — announced 24 Nov 00:39 EST = 24 Nov UTC.
+- Not yet: Timms disability-payments review (expected; not an outcome).
 
 ## Labels — HOW SURE
 
@@ -168,12 +182,103 @@ Africa 1 · Science 1. The six lead stories are the featured six from the
 - CLAIM: asserted by one source or a party, not yet independently confirmed.
 - ONGOING: still developing; figures may change.
 
+## Polish pass (2026-11-25 ~00:40–01:05 AWST) — the 8 self-audit fixes
+
+Naomi approved the resubmission ("现在就改，重新提交", 2026-11-25 00:36).
+This polish is a FIX pass on the submitted Atlas, not a new concept:
+same map-first layout, same title, same 35 stories.
+
+1. **Estonia coordinate.** Was lat 55.75, lon 37.6 (Moscow). Fixed to
+   Tallinn 59.4, 24.7. Every other lat/lon was verified against the real
+   place (all 35: featured pins and secondary dots). Pixel-verified on
+   the render: an amber dot sits at Tallinn and none at Moscow; all 29
+   secondary dots and all 6 red pins plot at their projected positions.
+2. **Sources footer.** Added Russell Record (cited for stories 14–15).
+   Also added US Treasury (cited on the Iran card) — found by the final
+   audit: every one of the 12 cited sources now appears in the footer,
+   expanded (AP → Associated Press, WSJ → Wall Street Journal,
+   Prism → Broadcast Prism, OTW → Off the Wire, Russell → Russell
+   Record, Treasury → US Treasury). Note: "WSOC" has no verifiable
+   fuller form — the research label does not match WSOC-TV (a Charlotte,
+   NC local station) for these international wire stories, so it is
+   kept as reported and not expanded by invention. "Access24" is the
+   outlet's full name (access24.news).
+3. **Regions, honestly.** The page no longer says "9 regions": the
+   subtitle reads "7 regions + sport & science" and the tally reads
+   "US 10 · Europe 5 · Asia 5 · UK 4 · Americas 3 · Middle East 3 ·
+   Africa 1 — plus Sport 3 · Science 1". The per-region counts were
+   also corrected (the submitted tally said Europe 7 / UK 3 /
+   Middle East 2, which did not match the story-by-story count; true
+   counts are Europe 5, UK 4, Middle East 3). Tally sums to 35.
+   No new regional stories were added (none could be verified as
+   23 Nov UTC in the time available), so the tally was reworded
+   instead of padded.
+4. **Timeline numbers.** Pins and cards renumbered by first-report
+   time order: 1 Kyiv, 2 Ebola, 3 EU, 4 Merkury, 5 Nvidia, 6 Iran.
+   The timeline now reads ~1 ~2 ~3 ~4 ~5 ~6 left-to-right, and the
+   map pins and lead cards match.
+5. **Timeline hours.** Each featured story's first-report UTC hour was
+   verified from its source (web search, 2026-11-25): Kyiv ~07:00
+   (strike overnight, toll confirmed Monday morning), Ebola ~09:00
+   (UN News 23 Nov; Tedros post Sun 22 Nov), EU ~12:00 (von der Leyen
+   announcement in Strasbourg, Monday), Merkury ~14:00 (Zelensky X
+   post, Monday afternoon Kyiv), Nvidia ~16:00 (board announcement,
+   Monday morning ET), Iran ~18:00 (Treasury announcement, Monday
+   afternoon ET; reported by 18:50 UTC). All six are best estimates,
+   so each dot is marked "~" and the caption reads "~ = approximate
+   hour" — per the mistakes-log convention, "~" where approximate,
+   never presented as exact.
+6. **Numbers band.** The two soft numbers are gone: 50% ("up to"
+   estimate) and 34 (developing figure) were replaced by hard figures
+   already verified in the entry — 1,638 measles cases in Pennsylvania
+   and the $450M Skubal deal. The band now reads 11 · 1,638 ·
+   $43.9B · +31% · 700,000 · $450M, all hard figures.
+7. **CLAIM attribution inside the summary.** Merkury headline is now
+   "Kyiv Says It Sank Russian Warship off Libya" and its summary
+   reads "Kyiv says sea drones sank the corvette; a helicopter and
+   cargo ship were also hit." Iran summary now attributes the phrase:
+   "Sanctions target the revenue the White House calls its 'last
+   financial lifeline'."
+8. **DATE CHECK.** Now in a shaded box, one size larger (10 → 11),
+   and with a "Not yet" line added: "Not yet: Timms
+   disability-payments review (expected; not an outcome)."
+
+Final self-audit (2026-11-25, before reporting back): every applicable
+item in mistakes.md was checked against the rendered image — the 8
+above plus the 23 deduplicated corrections. All 8 pass. Of the 23:
+the tally sums to 35 (14), per-story source + tag + legend on every
+story (13), DATE CHECK names 11 exclusions with dates + 1 "not yet"
+(2), timeline "~" convention (5), no future-event leads (20), fresh
+concept with all density components kept (15, 19), 7 regions tallied
+honestly with map + pins (17), no text-only grid (16), entered (12),
+hours cross-checked against multiple sources, not a single roundup
+(22). Two items are KNOWN GAPS in this fix pass, not fixed here:
+correction 8 (group the compact list by region) — the register is in
+page order; regrouping would split groups awkwardly across the three
+10-row columns and needs region headers, i.e. a layout redesign, which
+is out of scope for a fix pass; correction 9 (cover 15+ fields,
+including a culture/art item) — the page has no culture/art story and
+none could be verified as 23 Nov UTC in the time available; adding a
+story is out of scope for a fix pass that keeps the 35 stories. Both
+are recorded in mistakes.md for the next build.
+Note: the Merkury card reports the 23 Nov announcement; the sinking
+itself was before dawn Sun 22 Nov (correction 10/23 boundary — the
+card is framed as the announcement, which is the 23 Nov news).
+
 ## Render
 
-`python3 main.py` reads news.json and writes entry.png (1024×1024).
-Deterministic: fixed geometry, fixed fonts, no clock, no randomness, no
-network. Verified: two independent runs produce byte-identical output
-(sha256 5f023fbfd6801829fe07bb6af947439642a56db78f755a1536b99b77851cf280,
-189,017 bytes). Timeline dot positions are approximate — stories as
-reported through the day (UTC); the map is a stylised atlas, not a
-navigation chart.
+`python3 main.py` reads news.json and writes entry.png (1024×1024)
+(via /output/entry.png; the bundled entry.png in this directory is a
+copy of that output). Deterministic: fixed geometry, fixed fonts, no
+clock, no randomness, no network. Verified: two independent runs
+produce byte-identical output (sha256
+ac81d71cdc3ec627f4cb9cb14bf08d807cdfad22892ecf7e224be3af8e68e217,
+194,118 bytes). The map is a stylised atlas, not a navigation chart.
+Timeline dots are marked "~" (approximate hour, best estimate from
+each story's source).
+
+**Final gate (Naomi's rule, 2026-11-25 00:39): the mistakes log is only
+a record of past mistakes. The top-level agent (Muse herself) must
+personally review the finished work with fresh eyes before any
+upload/submission — the builder's self-audit above does not count as
+the final gate.**

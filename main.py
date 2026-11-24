@@ -299,8 +299,8 @@ def icon_chip(draw, x, y, s):
     draw.rectangle([x + 22, y + 22, x + 34, y + 34], fill=(118, 185, 0))
 
 
-ICONS = {1: icon_kyiv, 2: icon_ebola, 3: icon_sanctions,
-         4: icon_eu, 5: icon_ship, 6: icon_chip}
+ICONS = {1: icon_kyiv, 2: icon_ebola, 3: icon_eu,
+         4: icon_ship, 5: icon_chip, 6: icon_sanctions}
 
 
 def render():
@@ -332,11 +332,11 @@ def render():
     draw.line([MARGIN, 100, W - MARGIN, 100], fill=RULE, width=2)
     draw.line([MARGIN, 104, W - MARGIN, 104], fill=RULE, width=1)
 
-    # --- UTC timeline strip (dot positions approximate)
+    # --- UTC timeline strip (~ = approximate hour)
     tl_font = load_font(SANS_BOLD, 10)
     draw.text((MARGIN, 112), "23 NOV 2026 · UTC", font=tl_font, fill=INK)
     cap_font = load_font(SANS, 9)
-    cap = "dot positions approximate"
+    cap = "~ = approximate hour"
     cw = draw.textlength(cap, font=cap_font)
     draw.text((W - MARGIN - cw, 113), cap, font=cap_font, fill=MUTED)
     tl_y = 132
@@ -348,14 +348,14 @@ def render():
         lab = f"{hour:02d}"
         lw = draw.textlength(lab, font=tick_font)
         draw.text((tx - lw / 2, tl_y + 7), lab, font=tick_font, fill=MUTED)
-    pin_font = load_font(SANS_BOLD, 9)
+    pin_font = load_font(SANS_BOLD, 8)
     for s in featured:
         px = MARGIN + s["hour"] / 24 * CW
-        draw.ellipse([px - 8, tl_y - 8, px + 8, tl_y + 8], fill=RED,
+        draw.ellipse([px - 9, tl_y - 9, px + 9, tl_y + 9], fill=RED,
                      outline=INK, width=1)
-        lab = str(s["num"])
+        lab = ("~" + str(s["num"])) if s.get("approx") else str(s["num"])
         lw = draw.textlength(lab, font=pin_font)
-        draw.text((px - lw / 2, tl_y - 7), lab, font=pin_font,
+        draw.text((px - lw / 2, tl_y - 6), lab, font=pin_font,
                   fill=(255, 255, 255))
 
     # --- lead column: six numbered cards, one per featured story
@@ -478,21 +478,22 @@ def render():
         draw.text((x, by), lab_txt, font=row_font,
                   fill=LABEL_COLOR[s["label"]])
 
-    # --- footer: DATE CHECK + sources
-    draw.line([MARGIN, 944, W - MARGIN, 944], fill=RULE, width=1)
-    foot_font = load_font(SANS, 10)
-    foot_lines = wrap(draw, data["datecheck"], foot_font, CW)
-    fy = 950
-    for line in foot_lines[:3]:
-        draw.text((MARGIN, fy), line, font=foot_font, fill=(58, 56, 52))
-        fy += 12
-    src_font = load_font(SANS, 10)
+    # --- footer: DATE CHECK (shaded box) + sources
+    draw.line([MARGIN, 938, W - MARGIN, 938], fill=RULE, width=1)
+    draw.rounded_rectangle([MARGIN, 942, W - MARGIN, 1000], radius=4, fill=TILE)
+    foot_font = load_font(SANS, 11)
+    foot_lines = wrap(draw, data["datecheck"], foot_font, CW - 16)
+    fy = 946
+    for line in foot_lines[:4]:
+        draw.text((MARGIN + 8, fy), line, font=foot_font, fill=(58, 56, 52))
+        fy += 13
+    src_font = load_font(SANS, 9)
     src_lines = wrap(draw, data["sources"], src_font, CW)
-    fy = 988
+    fy = 1003
     for line in src_lines[:2]:
         lw = draw.textlength(line, font=src_font)
         draw.text(((W - lw) / 2, fy), line, font=src_font, fill=MUTED)
-        fy += 12
+        fy += 11
 
     out_dir = os.path.dirname(OUTPUT)
     if out_dir:
